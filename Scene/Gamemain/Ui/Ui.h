@@ -25,7 +25,7 @@ private:
     Texture comic;
     Texture floor;
     Texture blackboard;
-
+    Texture b;
     void FloorDraw();
     void FontStart();
     void CountReset();

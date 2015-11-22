@@ -18,44 +18,45 @@ void Gamemain::Setup(){
 
 	Astar::get().setup(map.GetEnemyChip(), map.GetPlayerChip());
 	ui.Setup();
+    BGM = Media("res/Media/BGM/playnaw.wav");
 }
 
 void Gamemain::Update(){
+    if (!BGM.isPlaying()){
+        BGM.play();
+    }
+    if (ui.IsStart()){
 
-	if (env.isPushKey('X')){
-		Astar::get().setMap(map.GetStatus());
+        int index;
+        count++;
+        index = (count) % 100;
+        if (index == 1){
+            enemy_number++;
+            if (enemy_number <= 5){
+                enemylist.PushEnemy(map.GetEnemyPos(), enemy_number, Vec2f(0, 7));
+            }
+        }
 
-	}
-	if (env.isPressKey('Z')){
-		int index;
-		count++;
-		index = (count) % 100;
-		if (index == 1){
-			enemy_number++;
-			if (enemy_number <= 5){
-				enemylist.PushEnemy(map.GetEnemyPos(), enemy_number, Vec2f(0, 7));
-			}
-		}
+        for (int i = 0; i < enemy_number; i++){
 
-		for (int i = 0; i < enemy_number; i++){
+            Astar::get().setPlayerPos(map.GetPlayerChip());
+            Astar::get().setEnemyPos(map.ChangeChip(enemylist.GetPos(i)));
+            //std::cout << map.DirectionChange(enemylist.GetPos(i), enemylist.GetSpeed(i)) << std::endl;
+            //if (map.DirectionChange(enemylist.GetPos(i), enemylist.GetSpeed(i)))
+            //{
+            //}
 
-			Astar::get().setPlayerPos(map.GetPlayerChip());
-			Astar::get().setEnemyPos(map.ChangeChip(enemylist.GetPos(i)));
-			//std::cout << map.DirectionChange(enemylist.GetPos(i), enemylist.GetSpeed(i)) << std::endl;
-			//if (map.DirectionChange(enemylist.GetPos(i), enemylist.GetSpeed(i)))
-			//{
-			//}
+            if (map.CenteringEnemyPos(enemylist.GetPos(i)) != null){
 
-			if (map.CenteringEnemyPos(enemylist.GetPos(i)) != null){
-
-			}
-			enemylist.Move(Astar::get().getParentPlayer(), i);
-			enemylist.SetPos(map.CenteringEnemyPos(enemylist.GetPos(i)), i);
-			Astar::get().update();
-		}
+            }
+            enemylist.Move(Astar::get().getParentPlayer(), i);
+            enemylist.SetPos(map.CenteringEnemyPos(enemylist.GetPos(i)), i);
+            Astar::get().update();
 
 
-	}
+
+        }
+    }
 		map.Update();
 		player.SetSelectItem(ui.Select(player.GetSelectItem()));
 		map.Editor(player.GetSelectItem(), player.MouseClick());
@@ -69,14 +70,27 @@ void Gamemain::Draw(){
 	ui.SelectDraw(player.GetSelectItem());
 	map.Draw();
 	player.Draw();
-	enemylist.Draw();
+    for (int i = 0; i < enemy_number; i++){
+
+        enemylist.Draw(i);
+    }
+    ui.CountDraw();
+
 }
 
 
 Scenename Gamemain::Shift(){
-	if (env.isPushKey(GLFW_KEY_ENTER)){
+    if (env.isPushKey(GLFW_KEY_ENTER) || 
+        env.isPushKey('1')){
+
+        BGM.stop();
+        
 		return Scenename::RESULT;
 	}
 	return Scenename::GAMEMAIN;
 }
+
+
+
+
 

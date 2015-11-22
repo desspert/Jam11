@@ -32,6 +32,8 @@ void Ui::Setup(){
     comic = Texture("res/Texture/comicicon.png");
     floor = Texture("res/Texture/stage_classroom.png");
     blackboard = Texture("res/Texture/blackboard.png");
+    b = Texture("res/Texture/keshigomu.png");
+
     count = 181;
 }
 void Ui::Cost(const int& cost){
@@ -65,8 +67,11 @@ void Ui::Draw(){
         switch (static_cast<Item>(i))
         {
         case Item::AIR:
-                drawFillBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
-                itemobject[i].size.x(), itemobject[i].size.y(), Color::white);
+                /*drawFillBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
+                itemobject[i].size.x(), itemobject[i].size.y(), Color::white);*/
+                drawTextureBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
+                    itemobject[i].size.x(), itemobject[i].size.y(),
+                    0, 0, 512, 512, b);
             break;
         case Item::DESK:
             drawTextureBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
@@ -114,8 +119,12 @@ void Ui::Draw(){
                 "y  " << itemobject[i].pos.y()<<
                 "i  " <<i<< std::endl;*/
             //font.draw(std::to_string(i))
-            drawFillBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
+            /*drawFillBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
                 itemobject[i].size.x(), itemobject[i].size.y(), Color::white);
+            */
+            drawTextureBox(itemobject[i].pos.x(), itemobject[i].pos.y(),
+                itemobject[i].size.x(), itemobject[i].size.y(),
+                0, 0, 512, 512, b);
             break;
 
         }
@@ -182,16 +191,16 @@ bool Ui::IsStart(){
 }
 
 void Ui::CountDraw(){
-    font.size(100);
     
     if (count > 0 && count < 181){
-        font.draw(std::to_string(count / 60+1),env.mousePosition(), Color::yellow);
+    font.size(100);
+        font.draw(std::to_string(count / 60+1),Vec2f(0,0), Color::yellow);
     }
     if (IsStart()){
         count--;
         if(count > -60)
         
-        font.draw("スタート", env.mousePosition(), Color::yellow);
+            font.draw("スタート", - font.drawSize("スタート")/2, Color::yellow);
     }
 }
 

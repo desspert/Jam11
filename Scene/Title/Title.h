@@ -9,7 +9,9 @@ class Title : public Classbase{
 private:
     int count;
 
-
+    Texture titre;
+    Font font = Font("res/kokubanB.ttf");
+    
 public:
 
 	Title();

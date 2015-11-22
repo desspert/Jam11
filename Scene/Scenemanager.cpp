@@ -5,14 +5,14 @@ Scenemanager::Scenemanager(){
 }
 
 void Scenemanager::Setup(){
-	scenechange = Scenename::GAMEMAIN;
+	scenechange = Scenename::TITLE;
 
     title.Setup();
     ////Ç±Ç±ÇÕç≈å„Ç…çÌèúÇ∑ÇÈÇÊÇ§Ç…
-    gamemanager.Setup();
+   /* gamemanager.Setup();
     result.Setup();
     stageselect.Setup();
-
+*/
 }
 
 
@@ -70,6 +70,8 @@ void Scenemanager::Shift(){
         scenechange = title.Shift();
         if (scenechange != Scenename::TITLE){
             stageselect.Setup();
+            gamemanager.Setup();
+
         }
         break;
     case Scenename::STAGESELECT:

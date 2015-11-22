@@ -40,6 +40,8 @@ private:
 
 	std::vector<std::vector<MapChip>> map;
 
+    void algorithm2();
+
 public:
 
 	static Astar& get(){
@@ -59,5 +61,7 @@ public:
 	void setEnemyPos(Vec2f enemy_pos);
 	void setPlayerPos(Vec2f player_pos);
 	void setMap(std::vector<std::vector<int>>setmap);
+
+    bool HitGoll(Vec2f enemy_pos, Vec2f player_pos, std::vector<std::vector<int>>setmap);
 };
 

@@ -11,7 +11,7 @@ Player::Player(){
 void Player::Setup(){
     cost = 50;
     select_Item = Item::DESK;
-    player = Texture("res/Texture/fuukiiinn.png");
+    player = Texture("res/Texture/got.png");
     
 }
 
@@ -46,5 +46,5 @@ void Player::SetPos(Vec2f _pos){
 }
 
 void Player::Draw(){
-    drawTextureBox(pos.x(), pos.y(), HEIGHT / 8, HEIGHT / 8, ani_count/12%4*512, 0, 512, 512, player);
+    drawTextureBox(pos.x(), pos.y(), HEIGHT / 8, HEIGHT / 8, 0, 0, 512, 512, player);
 }

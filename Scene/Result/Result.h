@@ -9,6 +9,10 @@ private:
     bool iswin;
     Texture win;
     Texture loos;
+    Texture win_texture;
+    Texture lose_texture;
+
+
     Media winse;// = Media("res/Media/Result/win.wav");
     Media loosse;// = Media("res/Media/Result/lost.wav");
 public:

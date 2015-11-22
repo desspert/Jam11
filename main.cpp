@@ -9,12 +9,12 @@ int main() {
 	Scenemanager_.Setup();
 
 	while (env.isOpen()) {
-		env.begin();
 		
 		Scenemanager_.Shift();
+		Scenemanager_.Update();
+		env.begin();
 
 		Scenemanager_.Draw();
-		Scenemanager_.Update();
 
 
 		env.end();

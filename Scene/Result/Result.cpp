@@ -14,6 +14,10 @@ void Result::Setup()
 */
     loosse = Media("res/Media/BGM/Result/lost.wav");
     winse = Media("res/Media/BGM/Result/win.wav");
+    win_texture = Texture("res/Texture/win.png");
+    lose_texture = Texture("res/Texture/lose.png");
+    iswin = !env.isPushKey('1');
+
 }
 
 void Result::Update(){
@@ -24,8 +28,8 @@ void Result::Draw(){
     if (iswin)
     {
 
-        drawFillBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, Color::red);
-        //drawTextureBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, 0, 0, , , win);
+        //drawFillBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, Color::red);
+        drawTextureBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, 0, 0, 1024, 1024, win_texture);
         if (!winse.isPlaying()){
             winse.play();
         }
@@ -33,7 +37,7 @@ void Result::Draw(){
     else
     {
         drawFillBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, Color::green);
-        //drawTextureBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, 0, 0, , , loos);
+        drawTextureBox(-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT, 0, 0, 1024, 1024, lose_texture);
 
         if (!loosse.isPlaying()){
             loosse.play();
@@ -43,8 +47,11 @@ void Result::Draw(){
 
 
 Scenename Result::Shift(){
-	if (env.isPushKey(GLFW_KEY_ENTER)){
-		return Scenename::TITLE;
+	if (env.isPushButton(Mouse::LEFT)){
+        winse.stop();
+        loosse.stop();
+        env.flushInput();
+        return Scenename::TITLE;
 	}
     return Scenename::RESULT;
 }
